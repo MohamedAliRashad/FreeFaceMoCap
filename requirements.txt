@@ -1,3 +1,0 @@
-mediapipe
-opencv-python
-numpy
