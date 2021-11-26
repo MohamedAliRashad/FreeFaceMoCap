@@ -1,10 +1,11 @@
 ---
 layout: post
-title: Sample blog post
-subtitle: Each post also has a subtitle
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
-tags: [test]
+title: Why we made it ?
+subtitle: The story of the existence 
+cover-img: /assets/img/path.jpg
+thumbnail-img: /assets/img/hello_world.jpeg
+share-img: /assets/img/hello_world.jpeg
+tags: [story]
 comments: true
 ---
 
