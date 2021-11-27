@@ -130,6 +130,8 @@ icons.txt
 .history
 faces
 autocomplete
+*.zip
+.gitignore
 
 # Pyre type checker
 .pyre/
