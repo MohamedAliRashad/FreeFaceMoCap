@@ -125,5 +125,11 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+icons.txt
+.vscode
+.history
+faces
+autocomplete
+
 # Pyre type checker
 .pyre/

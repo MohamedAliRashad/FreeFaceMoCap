@@ -1,59 +1,38 @@
-import cv2
-import mediapipe as mp
+import importlib
+from .config import Config
 
-def plot_mediapipe(results, image, thickness=1, circle_radius=1):
+def get_number_of_cams():
+    if not Config.are_dependancies_installed:
+        return 0
+    cv2 = importlib.import_module('cv2')
+    index = 0
+    arr = []
+    while True:
+        cap = cv2.VideoCapture(index)
+        if not cap.read()[0]:
+            break
+        else:
+            arr.append(index)
+        cap.release()
+        cv2.destroyAllWindows()
+        index += 1
+    return len(arr)
 
-    mp_drawing = mp.solutions.drawing_utils
-    mp_drawing_styles = mp.solutions.drawing_styles
-    mp_face_mesh = mp.solutions.face_mesh
-    drawing_spec = mp_drawing.DrawingSpec(thickness=thickness, circle_radius=circle_radius)
+def import_module(module_name, global_name=None, reload=True):
+    """
+    Import a module.
+    :param module_name: Module to import.
+    :param global_name: (Optional) Name under which the module is imported. If None the module_name will be used.
+       This allows to import under a different name with the same effect as e.g. "import numpy as np" where "np" is
+       the global_name under which the module can be accessed.
+    :raises: ImportError and ModuleNotFoundError
+    """
+    if global_name is None:
+        global_name = module_name
 
-    for face_landmarks in results.multi_face_landmarks:
-
-        mp_drawing.draw_landmarks(
-            image=image,
-            landmark_list=face_landmarks,
-            connections=mp_face_mesh.FACEMESH_TESSELATION,
-            landmark_drawing_spec=None,
-            connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_tesselation_style(),
-        )
-        mp_drawing.draw_landmarks(
-            image=image,
-            landmark_list=face_landmarks,
-            connections=mp_face_mesh.FACEMESH_CONTOURS,
-            landmark_drawing_spec=None,
-            connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_contours_style(),
-        )
-        mp_drawing.draw_landmarks(
-            image=image,
-            landmark_list=face_landmarks,
-            connections=mp_face_mesh.FACEMESH_IRISES,
-            landmark_drawing_spec=None,
-            connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_iris_connections_style(),
-        )
-    return image
-
-def plot_opencv(results, image, text=False):
-
-    for face in results.multi_face_landmarks:
-        for i, landmark in enumerate(face.landmark):
-            x = landmark.x
-            y = landmark.y
-
-            shape = image.shape
-            relative_x = int(x * shape[1])
-            relative_y = int(y * shape[0])
-
-            cv2.circle(image, (relative_x, relative_y), radius=1, color=(255, 0, 0), thickness=1)
-            if text:
-                cv2.putText(
-                    image,
-                    str(i),
-                    (relative_x, relative_y),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.3,
-                    (255, 0, 0),
-                    1,
-                    cv2.LINE_AA,
-                )
-    return image
+    if global_name in globals():
+        importlib.reload(globals()[global_name])
+    else:
+        # Attempt to import the module and assign it to globals dictionary. This allow to access the module under
+        # the given name, just like the regular import would.
+        globals()[global_name] = importlib.import_module(module_name)

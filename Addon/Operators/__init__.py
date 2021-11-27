@@ -1,0 +1,7 @@
+from .captureFace import FFMOCAP_OT_capture_face
+from .selectCharacter import FFMOCAP_OT_select_character
+from .deselectCharacter import FFMOCAP_OT_deselect_character
+from .selectFacePoints import FFMOCAP_OT_select_face_points
+from .deselectFacePoints import FFMOCAP_OT_deselect_face_points
+from .applyPoints import FFMOCAP_OT_apply_face_points
+from .clearPoints import FFMOCAP_OT_clear_face_points
