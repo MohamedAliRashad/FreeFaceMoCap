@@ -1,2 +1,3 @@
 from .plotMesh import plot_mesh
-from .addObject import add_object
+from .addLandmarkEmpties import add_landmark_empties
+from .addGroupEmpty import add_group_empty

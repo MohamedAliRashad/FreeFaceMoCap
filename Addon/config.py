@@ -39,3 +39,8 @@ class Config:
     operator_clear_face_points_idname = operators_prefix + 'clear_face_points'
     operator_apply_face_points_idname = operators_prefix + 'apply_face_points'
     operator_capture_face_idname = operators_prefix + 'capture_face'
+
+    ###### FACE EMPTIES #####
+    empties_prefix = 'FFMoCap_empty_'
+    group_empty_name = 'FFMoCap_GROUP_empty'
+    group_empty_first_location = (0, 0, 0)

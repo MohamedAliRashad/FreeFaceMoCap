@@ -4,7 +4,7 @@ import bpy
 import bmesh
 from bpy_extras.object_utils import AddObjectHelper
 from ..config import Config
-from ..FaceMeshTracking import plot_mesh, add_object
+from ..FaceMeshTracking import plot_mesh, add_landmark_empties, add_group_empty
 
 class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
     """Tooltip"""
@@ -66,7 +66,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
         self._timer = wm.event_timer_add(0.01, window=context.window)
         wm.modal_handler_add(self)
         self.init_camera()
-        print('started!')
+        self.firstFrame = True
         return {'RUNNING_MODAL'}
 
     def cancel(self, context):
@@ -75,7 +75,6 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
         self.cv2.destroyAllWindows()
         self._cap.release()
         self._cap = None
-        print('cancelled!')
     
     def modal(self, context, event):
         if (event.type in {'ESC'}) or self.stop == True:
@@ -106,6 +105,12 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
             self.cv2.imshow("Face Mesh Image", img)
             self.cv2.waitKey(1)
 
-            add_object(self, context, self.results)
+            if self.firstFrame:
+                add_landmark_empties(self.results, createObject= True)
+                self.firstFrame = False
+            else:
+                add_landmark_empties(self.results, createObject= False)
+            
+            add_group_empty(context)
 
         return {'PASS_THROUGH'}
