@@ -6,6 +6,7 @@ class FFMOCAP_PT_select_face_points(Common, bpy.types.Panel):
     """Selecting Face Points Panel"""
     bl_label = "Selecting Face Points"
     bl_idname = Config.panel_select_face_points_idname
+    bl_options = {"DEFAULT_CLOSED"}
 
     def draw(self, context):
         layout = self.layout

@@ -1,3 +1,4 @@
+from .initateFacialEmptiesPanel import FFMOCAP_PT_initiate_facial_empties
 from .selectCharPanel import FFMOCAP_PT_select_character
 from .captureFacePanel import FFMOCAP_PT_capture_face
 from .selectFacePointsPanel import FFMOCAP_PT_select_face_points

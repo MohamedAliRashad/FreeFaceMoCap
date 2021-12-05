@@ -5,3 +5,5 @@ from .selectFacePoints import FFMOCAP_OT_select_face_points
 from .deselectFacePoints import FFMOCAP_OT_deselect_face_points
 from .applyPoints import FFMOCAP_OT_apply_face_points
 from .clearPoints import FFMOCAP_OT_clear_face_points
+from .initiateFacialEmpties import FFMOCAP_OT_initiate_facial_empties
+from .confirmFaceLocationUpdate import FFMOCAP_OT_confirm_face_location_update

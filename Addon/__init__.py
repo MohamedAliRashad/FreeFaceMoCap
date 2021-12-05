@@ -16,7 +16,7 @@ Created by Rashad and Emam
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-# import bpy
+# bundle exec jekyll serve --livereload
 
 bl_info = {
     "name": "Free Face Motion Capture 2021.1.0",
@@ -44,7 +44,7 @@ from .config import Config
 from .messages import (ERROR_MESSAGES, draw_warning_labels, draw_system_info,
                        draw_long_label, draw_long_labels)
 
-from .Properties import SelectCharProp, SelectPointsProp
+from .Properties import SelectCharProp, SelectPointsProp, FaceTransformationMatrix
 from .classes import PROPERTIES_CLASSES, PANELS_CLASSES, OPERATORS_CLASSES
 from .utils import get_number_of_cams
 
@@ -132,6 +132,7 @@ else:
         bpy.types.Scene.ffmocap_props = bpy.props.PointerProperty(type= PROPERTIES_CLASSES[0])
         bpy.types.Scene.selected_char_prop = SelectCharProp()
         bpy.types.Scene.points_prop = SelectPointsProp()
+        bpy.types.Scene.face_transformation_matrix = FaceTransformationMatrix()
 
 
 
@@ -145,6 +146,7 @@ else:
         del bpy.types.Scene.ffmocap_props
         del bpy.types.Scene.selected_char_prop
         del bpy.types.Scene.points_prop
+        del bpy.types.Scene.face_transformation_matrix
 
 
 if __name__ == '__main__':

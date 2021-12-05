@@ -3,8 +3,9 @@ import bmesh
 from bpy_extras.object_utils import object_data_add
 from ..config import Config
 from mathutils import Vector
+from importlib import import_module
 
-def add_landmark_empties(landmarks, createObject):
+def add_landmark_empties(landmarks, createObject= False, matrix= None):
     if createObject:
         for i, v in enumerate(landmarks):
             bpy.ops.object.empty_add(type='PLAIN_AXES', location=v)
@@ -12,14 +13,14 @@ def add_landmark_empties(landmarks, createObject):
             empty.name = Config.empties_prefix + str(i)
             empty.scale = (0.01, 0.01, 0.01)
     else:
-        groupEmpty_loc = bpy.data.objects[Config.group_empty_name].location
-        groupEmpty_first_loc = Config.group_empty_first_location
-        for i, v in enumerate(landmarks):
+        np = import_module('numpy')
+        w = np.array(matrix)
+        D = np.array(landmarks)
+        D = np.insert(D, 3, 1, axis= 1)
+        Y = D.dot(w)
+        Y = np.delete(Y, 3, axis= 1)
+        for i, v in enumerate(Y):
             empty = bpy.data.objects[Config.empties_prefix + str(i)]
-            loc = empty.location
-            new_loc = Vector(v)
-            # diff_loc = groupEmpty_loc - new_loc
-            # print(diff_loc)
-            empty.delta_location = new_loc
+            empty.location = Vector(v)
     
     bpy.ops.object.select_all(action='DESELECT')

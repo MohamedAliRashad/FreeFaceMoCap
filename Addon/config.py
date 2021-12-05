@@ -18,6 +18,7 @@ class Config:
     panels_prefix = prefix + '_PT_'
 
     #panels ids
+    panel_initiate_facial_empties_idname = panels_prefix + 'initiate_facial_empties'
     panel_select_charachter_idname = panels_prefix + 'select_character'
     panel_select_face_points_idname = panels_prefix + 'select_face_points'
     panel_capture_charachter_idname = panels_prefix + 'capture_charachter'
@@ -32,6 +33,8 @@ class Config:
     operator_install_dependancies_preferences_idname = operators_prefix + 'install_dependancies_preferences'
 
     # operators ids
+    operator_initiate_facial_empties_idname = operators_prefix + 'initiate_facial_empties'
+    operator_confirm_face_location_update_idname = operators_prefix + 'confirm_face_location_update'
     operator_select_character_idname = operators_prefix + 'select_character'
     operator_deselect_character_idname = operators_prefix + 'deselect_character'
     operator_select_face_points_idname = operators_prefix + 'select_face_points'
@@ -44,3 +47,5 @@ class Config:
     empties_prefix = 'FFMoCap_empty_'
     group_empty_name = 'FFMoCap_GROUP_empty'
     group_empty_first_location = (0, 0, 0)
+    group_empty_initial_scale = 0.25
+    group_empty_new_scale = 1

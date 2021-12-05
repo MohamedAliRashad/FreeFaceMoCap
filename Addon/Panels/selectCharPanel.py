@@ -19,4 +19,6 @@ class FFMOCAP_PT_select_character(Common, bpy.types.Panel):
                             icon="TRASH")
         else:
             row.operator(Config.operator_select_character_idname, text="Select Character",
-                            icon="SELECT_SET")
+                            icon="CURSOR")
+            # row.operator(Config.operator_select_character_idname, text="Select Character",
+            #                 icon="SELECT_SET")
