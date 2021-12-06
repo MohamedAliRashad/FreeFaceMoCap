@@ -15,7 +15,10 @@
         <title>MediaPipe for Face Tracking</title>
         <description>
           Start simple and small - 
-          Under what circumstances should we step off a path? When is it essential that we finish what we start? If I bought a bag of peanuts and had an allergic reaction, no one would fault me if I threw it out. If I ended a relationship with a woman who...
+          Mediapipe was a solution made by Google to push the usage of Deep Learning in mainstream applications.
+
+It offers a lot of high-performance tools based on intuitive vision problems like Face Mesh Tracking that we are using here.
+
         </description>
         <pubDate>Fri, 26 Nov 2021 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/2021-11-26-mediapipe-face-mesh/</link>
@@ -26,7 +29,7 @@
         <title>Why we made it ?</title>
         <description>
           The story of the existence - 
-          This is a demo post to show you how to write blog posts with markdown. I strongly encourage you to take 5 minutes to learn how to write in markdown - it’ll teach you how to transform regular text into bold/italics/headings/tables/etc. Here is some bold text Here is a secondary...
+          The idea of the project came when we were discussing the future of Motion Capture and how centralized its solution is. A lot of animators in todays world don’t have the tools that enable them to build high-quality animations for their audience or themselves. def story(): pass Mediapipe is a...
         </description>
         <pubDate>Thu, 25 Nov 2021 00:00:00 -0500</pubDate>
         <link>http://localhost:4000/2021-11-25-why-we-made-it/</link>
