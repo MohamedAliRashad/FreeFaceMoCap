@@ -1,14 +1,22 @@
 import shutil
-import os
-import sys
+from pathlib import Path
+import argparse
 
-num_args = len(sys.argv)
+default_dir = Path(__file__).parent
 
-if num_args == 1:
-    raise ValueError('Please pass the directory name')
-elif num_args > 2:
-    raise ValueError("Can not parse directory name")
+# Create the parser
+parser = argparse.ArgumentParser(description="Build the archive for FreeFaceMoCap Addon")
 
-dir_name = sys.argv[1]
-dir_path = os.path.join(os.getcwd(), dir_name)
-shutil.make_archive(dir_path, 'zip', os.getcwd(), dir_name)
+# Add the arguments
+parser.add_argument("-p", "--path", type=Path, default=default_dir / "Addon", help="directory path for compression")
+
+# Execute the parse_args() method
+args = parser.parse_args()
+
+if not args.path.is_dir():
+    raise ValueError("Path provided is not a folder")
+
+if not args.path.exists():
+    raise ValueError("Path provided does not exist")
+
+shutil.make_archive(args.path, "zip", default_dir)
