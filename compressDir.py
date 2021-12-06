@@ -1,6 +1,6 @@
+import argparse
 import shutil
 from pathlib import Path
-import argparse
 
 default_dir = Path(__file__).parent
 

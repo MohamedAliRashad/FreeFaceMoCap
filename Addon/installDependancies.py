@@ -1,14 +1,16 @@
+import importlib
 import os
 import subprocess
-import bpy
 import sys
-import importlib
-from collections import namedtuple
+from pathlib import Path
+
+import bpy
+
 from .config import Config
 from .Panels.common import Common
 from .utils import get_number_of_cams
 
-requirements_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirements.txt')
+requirements_path = Path(__file__).parent / "requirements.txt"
 
 def import_module(module_name, global_name=None, reload=True):
     """
