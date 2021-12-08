@@ -4,7 +4,7 @@ from .Panels import FFMOCAP_PT_select_character, FFMOCAP_PT_select_face_points, 
 
 from .Operators import FFMOCAP_OT_capture_face, FFMOCAP_OT_select_character, FFMOCAP_OT_deselect_character, FFMOCAP_OT_select_face_points, \
     FFMOCAP_OT_deselect_face_points, FFMOCAP_OT_apply_face_points, FFMOCAP_OT_clear_face_points,FFMOCAP_OT_initiate_facial_empties, \
-    FFMOCAP_OT_confirm_face_location_update
+    FFMOCAP_OT_confirm_face_location_update, FFMOCAP_OT_initiate_facial_armature
 
 PROPERTIES_CLASSES = [
     Properties
@@ -20,6 +20,7 @@ PANELS_CLASSES = [
 
 OPERATORS_CLASSES = [
     FFMOCAP_OT_initiate_facial_empties,
+    FFMOCAP_OT_initiate_facial_armature,
     FFMOCAP_OT_confirm_face_location_update,
     FFMOCAP_OT_capture_face,
     FFMOCAP_OT_select_character,

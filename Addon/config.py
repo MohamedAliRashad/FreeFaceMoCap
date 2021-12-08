@@ -34,6 +34,7 @@ class Config:
 
     # operators ids
     operator_initiate_facial_empties_idname = operators_prefix + 'initiate_facial_empties'
+    operator_initiate_facial_armature_idname = operators_prefix + 'initiate_facial_armature'
     operator_confirm_face_location_update_idname = operators_prefix + 'confirm_face_location_update'
     operator_select_character_idname = operators_prefix + 'select_character'
     operator_deselect_character_idname = operators_prefix + 'deselect_character'

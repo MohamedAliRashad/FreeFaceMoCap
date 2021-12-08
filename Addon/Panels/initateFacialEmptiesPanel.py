@@ -13,17 +13,17 @@ class FFMOCAP_PT_initiate_facial_empties(Common, bpy.types.Panel):
         row = layout.row()
         row.operator(Config.operator_initiate_facial_empties_idname, text="Initiate Face Empties",
                           icon="OUTLINER_OB_EMPTY")
-        row.operator(Config.operator_confirm_face_location_update_idname, text="Confirm New Location",
+        row.operator(Config.operator_initiate_facial_armature_idname, text="Initiate Face Armature",
+                          icon="OUTLINER_OB_ARMATURE")
+        
+        # row = layout.row()
+        
+        row = layout.row()
+        split = row.split(factor=0.5)
+
+        col1 = split.column()
+        col2 = split.column()
+
+        col1.label(text='')
+        col2.operator(Config.operator_confirm_face_location_update_idname, text="Confirm",
                           icon="CHECKMARK")
-        
-        # row = layout.row()
-        
-        # row = layout.row()
-        # split = row.split(factor=0.5)
-
-        # col1 = split.column()
-        # col2 = split.column()
-
-        # col1.label(text='')
-        # col2.operator(Config.operator_confirm_face_location_update_idname, text="Confirm New Location",
-        #                   icon="CHECKMARK")

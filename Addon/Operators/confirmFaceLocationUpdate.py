@@ -23,8 +23,6 @@ class FFMOCAP_OT_confirm_face_location_update(bpy.types.Operator):
             new_location = list(bpy.data.objects[Config.empties_prefix + str(i)].location)
             new_landmarks.append(new_location)
 
-        print(len(new_landmarks))
         w = get_face_transformation_matrix(initial_landmarks, new_landmarks)
         props.matrix = w
-        print(props.matrix)
         return {'FINISHED'}

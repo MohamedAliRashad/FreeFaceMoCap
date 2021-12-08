@@ -131,7 +131,7 @@ icons.txt
 faces
 autocomplete
 *.zip
-.gitignore
+Hewedy instructions.txt
 
 # Pyre type checker
 .pyre/

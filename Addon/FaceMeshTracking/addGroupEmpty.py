@@ -16,7 +16,6 @@ def add_group_empty(context):
 
     else:
         groupEmpty = bpy.data.objects[Config.group_empty_name]
-        # groupEmpty.delta_location = location
         groupEmpty.location = location
 
     bpy.ops.object.select_all(action='DESELECT')
@@ -24,8 +23,3 @@ def add_group_empty(context):
     for empty in empties:
         empty.parent = groupEmpty
         empty.matrix_parent_inverse = groupEmpty.matrix_world.inverted()
-
-    # groupEmpty.location = context.scene.cursor.location
-    # groupEmpty.location -= diff_loc
-    # groupEmpty.rotation_euler = (radians(-90), 0, radians(90))
-    # groupEmpty.scale = tuple(Config.group_empty_new_scale for _ in range(3))
