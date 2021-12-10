@@ -9,7 +9,7 @@ class FFMOCAP_PT_no_camera_found(Common, bpy.types.Panel):
 
     @classmethod
     def poll(self, context):
-        return Config.are_dependancies_installed and Config.number_of_available_cameras == 0
+        return Config.are_dependencies_installed and len(Config.available_cameras) == 0
 
     def draw(self, context):
         layout = self.layout

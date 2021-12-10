@@ -2,7 +2,7 @@ import bpy
 from ..config import Config
 
 def update_cameras(self, context):
-    return [(str(i), f'Camera Source {i + 1}', '') for i in range(Config.number_of_available_cameras)]
+    return [(str(i), f'Camera Source {i + 1}', '') for i in Config.available_cameras]
 
 class FFMOCAPProperties(bpy.types.PropertyGroup):
     show_mesh_on_real_face: bpy.props.BoolProperty(

@@ -34,9 +34,7 @@ bl_info = {
 from .installDependancies import DEPENDANCIES_CLASSES, append_to_sys
 append_to_sys()
 
-import os
 import sys
-from threading import Thread
 
 import bpy
 
@@ -46,7 +44,7 @@ from .messages import (ERROR_MESSAGES, draw_warning_labels, draw_system_info,
 
 from .Properties import SelectCharProp, SelectPointsProp, FaceTransformationMatrix
 from .classes import PROPERTIES_CLASSES, PANELS_CLASSES, OPERATORS_CLASSES
-from .utils import get_number_of_cams
+from .utils import get_available_cams
 
 def _is_platform_64bit():
     import platform
@@ -117,10 +115,10 @@ else:
             import numpy
             import cv2
             import mediapipe
-            Config.are_dependancies_installed = True
-            Config.number_of_available_cameras = get_number_of_cams()
+            Config.are_dependencies_installed = True
+            Config.available_cameras = get_available_cams()
         except:
-            Config.are_dependancies_installed = False
+            Config.are_dependencies_installed = False
         
 
         for cls in DEPENDANCIES_CLASSES:

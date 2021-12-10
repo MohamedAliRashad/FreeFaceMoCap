@@ -1,6 +1,5 @@
 import bpy
 from ..config import Config
-from ..utils import get_number_of_cams
 from .common import Common
 
 class FFMOCAP_PT_capture_face(Common, bpy.types.Panel):
@@ -14,7 +13,7 @@ class FFMOCAP_PT_capture_face(Common, bpy.types.Panel):
         ffmocap_props = scene.ffmocap_props
         
         row = layout.row()
-        # ffmocap_props.video_sources_enum.items = [(str(i), f'Camera Source {i + 1}', '') for i in range(Config.number_of_available_cameras)]
+        # ffmocap_props.video_sources_enum.items = [(str(i), f'Camera Source {i + 1}', '') for i in range(Config.available_cameras)]
         # print(ffmocap_props.video_sources_enum)
         row.prop(data= ffmocap_props, property= 'video_sources_enum', text= f'Choose a webcam to use')
         

@@ -37,7 +37,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
     mp = None
 
     def init_camera(self):
-        if Config.are_dependancies_installed:
+        if Config.are_dependencies_installed:
             self.np = import_module('numpy')
             self.cv2 = import_module('cv2')
             self.mp = import_module('mediapipe')
@@ -102,7 +102,10 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
             img = self.cv2.cvtColor(self.frame, self.cv2.COLOR_BGR2RGB)
             self.cv2.putText(img, f'FPS: {int(video_fps)}', (10,30), self.cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
             self.cv2.imshow("Face Mesh Image", img)
-            self.cv2.waitKey(1)
+            key = self.cv2.waitKey(1)
+            if key == ord("q") or key == 27:
+                self.cancel(context)
+                return {'CANCELLED'}
 
             add_landmark_empties(self.results, matrix= context.scene.face_transformation_matrix.matrix)
             
