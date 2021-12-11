@@ -11,8 +11,8 @@ class Config:
     prefix = 'FFMOCAP'
 
     # dependancies_installed = []
-    are_dependancies_installed = False
-    number_of_available_cameras = 0
+    are_dependencies_installed = False
+    available_cameras = []
 
     ###### PANELS #####
     panels_prefix = prefix + '_PT_'

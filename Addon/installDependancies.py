@@ -8,7 +8,6 @@ import bpy
 
 from .config import Config
 from .Panels.common import Common
-from .utils import get_number_of_cams
 
 requirements_path = Path(__file__).parent / "requirements.txt"
 
@@ -88,7 +87,7 @@ class FFMOCAP_PT_warning_panel(Common, bpy.types.Panel):
 
     @classmethod
     def poll(self, context):
-        return not Config.are_dependancies_installed
+        return not Config.are_dependencies_installed
 
     def draw(self, context):
         layout = self.layout
@@ -122,7 +121,7 @@ class FFMOCAP_OT_install_dependencies(bpy.types.Operator):
     @classmethod
     def poll(self, context):
         # Deactivate when dependencies have been installed
-        return not Config.are_dependancies_installed
+        return not Config.are_dependencies_installed
 
     def execute(self, context):
         try:
@@ -134,7 +133,7 @@ class FFMOCAP_OT_install_dependencies(bpy.types.Operator):
             return {"CANCELLED"}
 
 
-        Config.are_dependancies_installed = True
+        Config.are_dependencies_installed = True
 
         try:
             import numpy

@@ -8,4 +8,4 @@ class Common:
     @classmethod
     def poll(self, context):
         # Deactivate when dependencies have been installed
-        return Config.are_dependancies_installed and not Config.number_of_available_cameras == 0
+        return Config.are_dependencies_installed and not len(Config.available_cameras) == 0

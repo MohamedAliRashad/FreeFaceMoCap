@@ -1,22 +1,20 @@
 import importlib
 from .config import Config
 
-def get_number_of_cams():
-    if not Config.are_dependancies_installed:
+def get_available_cams():
+    if not Config.are_dependencies_installed:
         return 0
     cv2 = importlib.import_module('cv2')
-    index = 0
-    arr = []
-    while True:
-        cap = cv2.VideoCapture(index)
+    cameras = []
+    for i in range(10):
+        cap = cv2.VideoCapture(i)
         if not cap.read()[0]:
-            break
+            continue
         else:
-            arr.append(index)
+            cameras.append(i)
         cap.release()
         cv2.destroyAllWindows()
-        index += 1
-    return len(arr)
+    return cameras
 
 def import_module(module_name, global_name=None, reload=True):
     """
@@ -36,3 +34,6 @@ def import_module(module_name, global_name=None, reload=True):
         # Attempt to import the module and assign it to globals dictionary. This allow to access the module under
         # the given name, just like the regular import would.
         globals()[global_name] = importlib.import_module(module_name)
+
+if __name__ == '__main__':
+    print(get_available_cams())
