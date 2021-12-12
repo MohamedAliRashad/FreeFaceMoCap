@@ -12,8 +12,8 @@ PROPERTIES_CLASSES = [
 
 PANELS_CLASSES = [
     FFMOCAP_PT_initiate_facial_empties,
-    FFMOCAP_PT_select_character,
-    FFMOCAP_PT_select_face_points,
+    # FFMOCAP_PT_select_character,
+    # FFMOCAP_PT_select_face_points,
     FFMOCAP_PT_capture_face,
     FFMOCAP_PT_no_camera_found
 ]

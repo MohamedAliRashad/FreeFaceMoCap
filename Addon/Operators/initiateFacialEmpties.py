@@ -13,4 +13,5 @@ class FFMOCAP_OT_initiate_facial_empties(bpy.types.Operator):
         props.num_landmarks = len(landmarks)
         add_landmark_empties(landmarks, createObject= True)
         add_group_empty(context)
+
         return {'FINISHED'}

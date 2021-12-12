@@ -7,7 +7,7 @@ class Config:
 
     # Main Addon config names
     addon_name = 'Free Face Motion Capture'
-    tab_category = 'Free Face Motion Capture'
+    tab_category = 'FFMoCap'
     prefix = 'FFMOCAP'
 
     # dependancies_installed = []
@@ -47,7 +47,8 @@ class Config:
     ###### FACE EMPTIES #####
     empties_prefix = 'FFMoCap_empty_'
     group_empty_name = 'FFMoCap_GROUP_empty'
-
+    group_empty_initial_scale = 0.25
+    group_empty_new_scale = 1
 
     ###### FACE ARMATURE #####
-    num_face_armatures = 0
+    num_faces = 0

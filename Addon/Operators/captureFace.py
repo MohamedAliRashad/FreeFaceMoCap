@@ -103,7 +103,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
             self.cv2.putText(img, f'FPS: {int(video_fps)}', (10,30), self.cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
             self.cv2.imshow("Face Mesh Image", img)
             key = self.cv2.waitKey(1)
-            if key == ord("q") or key == 27:
+            if key == 27:
                 self.cancel(context)
                 return {'CANCELLED'}
 
