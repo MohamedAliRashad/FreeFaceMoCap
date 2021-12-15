@@ -4,13 +4,15 @@ from bpy_extras.object_utils import object_data_add
 from ..config import Config
 from mathutils import Vector
 from importlib import import_module
+from .getNumFacesEmpties import get_num_of_faces_empties
 
 def add_landmark_empties(landmarks, createObject= False, matrix= None):
     if createObject:
+        num_faces = get_num_of_faces_empties()
         for i, v in enumerate(landmarks):
-            bpy.ops.object.empty_add(type='PLAIN_AXES', location=v)
+            bpy.ops.object.empty_add(type='PLAIN_AXES', location=Vector(v))
             empty = bpy.context.active_object
-            empty.name = Config.empties_prefix + str(i)
+            empty.name = Config.empties_prefix + str(num_faces).zfill(3) + '_' + str(i)
             empty.scale = (0.01, 0.01, 0.01)
     else:
         np = import_module('numpy')

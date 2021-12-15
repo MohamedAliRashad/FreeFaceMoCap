@@ -3,6 +3,7 @@ import bmesh
 import addon_utils
 from ..config import Config
 from mathutils import Vector
+from ..FaceMeshTracking import add_landmark_empties, add_group_empty
 
 def add_armature():
     bpy.ops.object.armature_add()
@@ -81,18 +82,20 @@ class FFMOCAP_OT_initiate_facial_armature(bpy.types.Operator):
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        bpy.ops.pose.rigify_generate()
-        rig_objs = []
-        for obj in bpy.context.scene.objects:
-            if obj.name.startswith("rig"):
-                rig_objs.append(obj)
+        add_landmark_empties(new_bone_locations, createObject= True)
+        add_group_empty(context)
+        # bpy.ops.pose.rigify_generate()
+        # rig_objs = []
+        # for obj in bpy.context.scene.objects:
+        #     if obj.name.startswith("rig"):
+        #         rig_objs.append(obj)
 
-        rig_obj = rig_objs[-1]
-        del rig_objs
+        # rig_obj = rig_objs[-1]
+        # del rig_objs
 
-        if Config.num_faces == 1:
-            rig_obj.name = 'FFMoCap_RIG'
-        else:
-            rig_obj.name = 'FFMoCap_RIG.'+str(Config.num_faces - 1).zfill(3)
+        # if Config.num_faces == 1:
+        #     rig_obj.name = 'FFMoCap_RIG'
+        # else:
+        #     rig_obj.name = 'FFMoCap_RIG.'+str(Config.num_faces - 1).zfill(3)
         
         return {'FINISHED'}

@@ -132,6 +132,8 @@ faces
 autocomplete
 *.zip
 Hewedy instructions.txt
+*.ipynb
+*.json
 
 # Pyre type checker
 .pyre/
