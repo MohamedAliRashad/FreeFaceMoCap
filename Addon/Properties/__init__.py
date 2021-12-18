@@ -1,1 +1,1 @@
-from .properties import FFMOCAPProperties, SelectCharProp, SelectPointsProp, FaceTransformationMatrix
+from .properties import FFMOCAPProperties, FaceTransformationMatrix

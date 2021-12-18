@@ -4,7 +4,7 @@ import bpy
 import bmesh
 from bpy_extras.object_utils import AddObjectHelper
 from ..config import Config
-from ..FaceMeshTracking import plot_mesh, add_landmark_empties, add_group_empty
+from ..FaceMeshTracking import plot_mesh, add_landmark_empties, add_group_empty, transform_landmarks, rotate_head_with_axes
 
 class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
     """Tooltip"""
@@ -65,6 +65,8 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
         wm = context.window_manager
         self._timer = wm.event_timer_add(0.01, window=context.window)
         wm.modal_handler_add(self)
+        self.frame_num = 0
+        self.landmarks_list = []
         self.init_camera()
         return {'RUNNING_MODAL'}
 
@@ -76,7 +78,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
         self._cap = None
     
     def modal(self, context, event):
-        if (event.type in {'ESC'}) or self.stop == True:
+        if (event.type in {'ESC'}) or self.stop:
             self.cancel(context)
             return {'CANCELLED'}
 
@@ -98,7 +100,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
                 # Get FPS
                 if self.fps:
                     video_fps = self._cap.get(self.cv2.CAP_PROP_FPS)
-            # Show camera image in a window                     
+            # Show camera image in a window
             img = self.cv2.cvtColor(self.frame, self.cv2.COLOR_BGR2RGB)
             self.cv2.putText(img, f'FPS: {int(video_fps)}', (10,30), self.cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
             self.cv2.imshow("Face Mesh Image", img)
@@ -106,9 +108,15 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator, AddObjectHelper):
             if key == 27:
                 self.cancel(context)
                 return {'CANCELLED'}
+                
+            # transformation
+            self.landmarks_list.append(self.results)
 
-            add_landmark_empties(self.results, matrix= context.scene.face_transformation_matrix.matrix)
-            
-            # add_group_empty(context)
+            if len(self.landmarks_list) >= 3:
+                out = self.np.sum(self.landmarks_list, axis= 0) / 3
+                landmarks = transform_landmarks(out, None,  initial = False)
+                add_landmark_empties(landmarks, None)
+                rotate_head_with_axes()
+                self.landmarks_list.pop(0)
 
         return {'PASS_THROUGH'}

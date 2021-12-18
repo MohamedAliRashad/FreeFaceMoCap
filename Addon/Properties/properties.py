@@ -23,18 +23,8 @@ class FFMOCAPProperties(bpy.types.PropertyGroup):
                     items = update_cameras,
                 )
 
-class SelectCharProp():
-    selected_char = None
-    is_selected = False
-
-class SelectPointsProp():
-    points = ['Chin', 'Left_Mouth', 'Right_Mouth', 'Nose', 'Left_Eye_Point_1', 'Left_Eye_Point_2', 'Right_Eye_Point_1', 'Right_Eye_Point_2']
-    points_pos = [None for _ in range(len(points))]
-    points_selected = [False for _ in range(len(points))]
-
 class FaceTransformationMatrix():
-    num_landmarks = 0
-    matrix = None
+    armature_points = None
 
 
 

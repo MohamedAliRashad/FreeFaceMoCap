@@ -34,6 +34,9 @@ bl_info = {
 from .installDependancies import DEPENDANCIES_CLASSES, append_to_sys
 append_to_sys()
 
+import warnings
+warnings.filterwarnings("ignore")
+
 import sys
 
 import bpy
@@ -42,7 +45,7 @@ from .config import Config
 from .messages import (ERROR_MESSAGES, draw_warning_labels, draw_system_info,
                        draw_long_label, draw_long_labels)
 
-from .Properties import SelectCharProp, SelectPointsProp, FaceTransformationMatrix
+from .Properties import FaceTransformationMatrix
 from .classes import PROPERTIES_CLASSES, PANELS_CLASSES, OPERATORS_CLASSES
 from .utils import get_available_cams
 
@@ -128,8 +131,6 @@ else:
             bpy.utils.register_class(cls)
         
         bpy.types.Scene.ffmocap_props = bpy.props.PointerProperty(type= PROPERTIES_CLASSES[0])
-        bpy.types.Scene.selected_char_prop = SelectCharProp()
-        bpy.types.Scene.points_prop = SelectPointsProp()
         bpy.types.Scene.face_transformation_matrix = FaceTransformationMatrix()
 
 
@@ -142,8 +143,6 @@ else:
             bpy.utils.unregister_class(cls)
 
         del bpy.types.Scene.ffmocap_props
-        del bpy.types.Scene.selected_char_prop
-        del bpy.types.Scene.points_prop
         del bpy.types.Scene.face_transformation_matrix
 
 

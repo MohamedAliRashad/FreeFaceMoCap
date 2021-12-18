@@ -1,5 +1,3 @@
-from .initateFacialEmptiesPanel import FFMOCAP_PT_initiate_facial_empties
-from .selectCharPanel import FFMOCAP_PT_select_character
+from .initateFacePanel import FFMOCAP_PT_initiate_face
 from .captureFacePanel import FFMOCAP_PT_capture_face
-from .selectFacePointsPanel import FFMOCAP_PT_select_face_points
 from .noCameraFoundPanel import FFMOCAP_PT_no_camera_found

@@ -18,9 +18,7 @@ class Config:
     panels_prefix = prefix + '_PT_'
 
     #panels ids
-    panel_initiate_facial_empties_idname = panels_prefix + 'initiate_facial_empties'
-    panel_select_charachter_idname = panels_prefix + 'select_character'
-    panel_select_face_points_idname = panels_prefix + 'select_face_points'
+    panel_initiate_face_idname = panels_prefix + 'initiate_face'
     panel_capture_charachter_idname = panels_prefix + 'capture_charachter'
     panel_no_camera_idname = panels_prefix + 'no_camera'
     
@@ -33,22 +31,28 @@ class Config:
     operator_install_dependancies_preferences_idname = operators_prefix + 'install_dependancies_preferences'
 
     # operators ids
-    operator_initiate_facial_empties_idname = operators_prefix + 'initiate_facial_empties'
-    operator_initiate_facial_armature_idname = operators_prefix + 'initiate_facial_armature'
-    operator_confirm_face_location_update_idname = operators_prefix + 'confirm_face_location_update'
-    operator_select_character_idname = operators_prefix + 'select_character'
-    operator_deselect_character_idname = operators_prefix + 'deselect_character'
-    operator_select_face_points_idname = operators_prefix + 'select_face_points'
-    operator_deselect_face_points_idname = operators_prefix + 'deselect_face_points'
-    operator_clear_face_points_idname = operators_prefix + 'clear_face_points'
-    operator_apply_face_points_idname = operators_prefix + 'apply_face_points'
+    operator_initiate_face_idname = operators_prefix + 'initiate_face'
+    operator_generate_rig_idname = operators_prefix + 'generate_rig'
     operator_capture_face_idname = operators_prefix + 'capture_face'
 
     ###### FACE EMPTIES #####
     empties_prefix = 'FFMoCap_empty_'
-    group_empty_name = 'FFMoCap_GROUP_empty'
+    group_empty_prefix = 'FFMoCap_EMPTIES_GROUP_'
     group_empty_initial_scale = 0.25
     group_empty_new_scale = 1
+    group_loc = None
 
     ###### FACE ARMATURE #####
-    num_faces = 0
+    armature_prefix = 'FFMoCap_Armature_'
+    rig_prefix = 'FFMoCap_RIG_'
+    rig_data_prefix = 'FFMoCap_RIG_rig_'
+    
+    num_armatures = 0
+    initial_landmarks = None
+    armature_points = None
+    empties_names = None
+    nose_loc = None
+    head_loc = None
+    lip_bottom_loc = None
+    jaw_master_loc = None
+    jaw_master = None
