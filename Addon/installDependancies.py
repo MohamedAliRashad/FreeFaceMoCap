@@ -52,9 +52,9 @@ def install_pip():
 
 def install_dependancies(module_name = '', from_requirements = True):
     if from_requirements:
-        subprocess.call([sys.executable, "-m", "pip", "install", '--upgrade', '-r', requirements_path])
+        subprocess.call([sys.executable, "-m", "pip", "install", '-r', requirements_path])
     else:
-        subprocess.call([sys.executable, "-m", "pip", "install", '--upgrade', module_name])
+        subprocess.call([sys.executable, "-m", "pip", "install", module_name])
 
 def append_to_sys(module_name= '', from_requirements= True):
     def append_module_to_sys(module):
@@ -74,11 +74,21 @@ def append_to_sys(module_name= '', from_requirements= True):
         modules = None
         with open(requirements_path, 'r') as f:
             modules = f.read().split("\n")
+            modules.pop(-1)
         
         for module in modules:
             append_module_to_sys(module)
     else:
         append_module_to_sys(module_name)
+
+def check_installed(module):
+    if module == 'opencv-python':
+        module = 'cv2'
+    try:
+        importlib.import_module(module)
+        return True
+    except ModuleNotFoundError:
+        return False
     
 
 class FFMOCAP_PT_warning_panel(Common, bpy.types.Panel):
@@ -135,20 +145,16 @@ class FFMOCAP_OT_install_dependencies(bpy.types.Operator):
 
         Config.are_dependencies_installed = True
 
-        try:
-            import numpy
-        except:
-            print('Error numpy')
-        
-        try:
-            import cv2
-        except:
-            print('Error cv2')
-        
-        try:
-            import mediapipe
-        except:
-            print('Error mediapipe')
+        modules = None
+        with open(requirements_path, 'r') as f:
+            modules = f.read().split("\n")
+            modules.pop(-1)
+
+        for module in modules:
+            ret = check_installed(module)
+            if not ret:
+                self.report({'ERROR'}, f'Can not install the module named {module}.')
+                return {'CANCELLED'}
 
         return {"FINISHED"}
 
@@ -166,20 +172,3 @@ DEPENDANCIES_CLASSES = [
     FFMOCAP_OT_install_dependencies,
     FFMOCAP_preferences
 ]
-
-# class FFMOCAP_OT_install_dependancies(bpy.types.Operator):
-#     bl_idname = Config.operator_install_dependancies_idname
-#     bl_label = "FFMoCap Installing Dependancies Operator"
-
-
-#     def execute(self, context):
-#         py_exec = sys.executable       
-
-#         # ensure pip is installed & update
-#         # subprocess.call([str(py_exec), "-m", "ensurepip", "--user"])
-#         subprocess.call([str(py_exec), "-m", "pip", "install", "--upgrade", "pip"])
-#         # # install dependencies using pip
-#         # # dependencies such as 'numpy' could be added to the end of this command's list
-#         subprocess.call([str(py_exec),"-m", "pip", "install", "-r", requirements_path])
-
-#         return {'FINISHED'}

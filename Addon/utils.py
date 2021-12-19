@@ -3,17 +3,24 @@ from .config import Config
 
 def get_available_cams():
     if not Config.are_dependencies_installed:
-        return 0
-    cv2 = importlib.import_module('cv2')
+        return []
+    v4l2ctl = importlib.import_module('v4l2ctl')
     cameras = []
     for i in range(10):
-        cap = cv2.VideoCapture(i)
-        if not cap.read()[0]:
+        try:
+            name = str(v4l2ctl.v4l2device.V4l2Device(i).name)
+            src = str(v4l2ctl.v4l2device.V4l2Device(i).device)
+            camera = (name, src)
+
+            if len(cameras) > 0:
+                if name in list(map(lambda x: x[0], cameras)):
+                    continue
+            
+            cameras.append(camera)
+        
+        except FileNotFoundError:
             continue
-        else:
-            cameras.append(i)
-        cap.release()
-        cv2.destroyAllWindows()
+
     return cameras
 
 def import_module(module_name, global_name=None, reload=True):

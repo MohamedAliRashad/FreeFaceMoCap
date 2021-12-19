@@ -3,6 +3,10 @@ import bpy
 from ..config import Config
 import json
 import csv
+from pathlib import Path
+
+modifiers_path = Path(__file__).parent / "modifiers.csv"
+results_path = Path(__file__).parent / "results.json"
 
 def get_cluster_facial_landmarks(landmarks, distances):
     np = import_module('numpy')
@@ -25,7 +29,7 @@ def get_cluster_facial_landmarks(landmarks, distances):
 def transform_landmarks(landmarks, armature, initial= True):
     np = import_module('numpy')
     results = None
-    with open('results.json', 'r') as f:
+    with open(results_path, 'r') as f:
         results = json.load(f)
 
     landmarks = np.array(landmarks)
@@ -99,7 +103,7 @@ def transform_landmarks(landmarks, armature, initial= True):
         new_armature_points.append(get_cluster_facial_landmarks(landmarks[np.array([int(i) for i in point.keys()])], point.values()))
     
     modifiers = []
-    with open('modifiers.csv', 'r') as f:
+    with open(modifiers_path, 'r') as f:
         r = csv.reader(f, delimiter=',')
         for row in r:
             modifiers.append(row)

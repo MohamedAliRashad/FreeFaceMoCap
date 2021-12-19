@@ -119,10 +119,14 @@ else:
             import cv2
             import mediapipe
             Config.are_dependencies_installed = True
-            Config.available_cameras = get_available_cams()
         except:
             Config.are_dependencies_installed = False
         
+        try:
+            Config.available_cameras = get_available_cams()
+        
+        except Exception as err:
+            print(err)
 
         for cls in DEPENDANCIES_CLASSES:
             bpy.utils.register_class(cls)

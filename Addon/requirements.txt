@@ -1,3 +1,4 @@
 mediapipe
 opencv-python
 numpy
+v4l2ctl
