@@ -7,3 +7,4 @@ from .getFaceTransMatrix import get_face_transformation_matrix
 from .landmarksTransformation import transform_landmarks
 from .face_bones import get_face_bones
 from .rotationWithAxes import rotate_head_with_axes
+from .oneEuroFilter import OneEuroFilter

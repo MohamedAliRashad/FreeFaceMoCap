@@ -17,18 +17,19 @@ class Config:
     ###### PANELS #####
     panels_prefix = prefix + '_PT_'
 
-    #panels ids
+    # panels ids
     panel_initiate_face_idname = panels_prefix + 'initiate_face'
     panel_capture_charachter_idname = panels_prefix + 'capture_charachter'
     panel_no_camera_idname = panels_prefix + 'no_camera'
-    
+
     ###### OPERATORS #####
     operators_prefix = 'object.ffmocap_'
 
-    #libraries install operator
+    # libraries install operator
     panel_install_dependancies_idname = panels_prefix + 'install_dependancies'
     operator_install_dependancies_idname = operators_prefix + 'install_dependancies'
-    operator_install_dependancies_preferences_idname = operators_prefix + 'install_dependancies_preferences'
+    operator_install_dependancies_preferences_idname = operators_prefix + \
+        'install_dependancies_preferences'
 
     # operators ids
     operator_initiate_face_idname = operators_prefix + 'initiate_face'
@@ -46,13 +47,12 @@ class Config:
     armature_prefix = 'FFMoCap_Armature_'
     rig_prefix = 'FFMoCap_RIG_'
     rig_data_prefix = 'FFMoCap_RIG_rig_'
-    
+
     num_armatures = 0
     initial_landmarks = None
     armature_points = None
     empties_names = None
     nose_loc = None
     head_loc = None
-    lip_bottom_loc = None
-    jaw_master_loc = None
-    jaw_master = None
+    brow_r = None
+    brow_l = None

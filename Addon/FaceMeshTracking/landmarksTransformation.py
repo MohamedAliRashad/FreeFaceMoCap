@@ -8,6 +8,7 @@ from pathlib import Path
 modifiers_path = Path(__file__).parent / "modifiers.csv"
 results_path = Path(__file__).parent / "results.json"
 
+
 def get_cluster_facial_landmarks(landmarks, distances):
     np = import_module('numpy')
     n = len(landmarks)
@@ -26,51 +27,52 @@ def get_cluster_facial_landmarks(landmarks, distances):
     location = location / sum(weights)
     return location
 
-def transform_landmarks(landmarks, armature, initial= True):
+
+def transform_landmarks(landmarks, armature, initial=True):
     np = import_module('numpy')
     results = None
     with open(results_path, 'r') as f:
         results = json.load(f)
 
     landmarks = np.array(landmarks)
-    
+
     if armature is None:
         armature_points = Config.armature_points
     else:
         armature_points = np.array(armature)
 
     if initial:
-        Config.armature_points = armature_points
+        Config.armature_points = np.array(armature_points)
 
     # ROTATING
     def rotate_x(points, angle):
         theta = (angle/180.) * np.pi
         rot_matrix = np.array([[1,               0,                 0],
-                                [0,np.cos(theta), -np.sin(theta)], 
-                                [0,np.sin(theta),  np.cos(theta)]])
-        for i,point in enumerate(points):
-            points[i,:] = point @ rot_matrix
-        
+                               [0, np.cos(theta), -np.sin(theta)],
+                               [0, np.sin(theta),  np.cos(theta)]])
+        for i, point in enumerate(points):
+            points[i, :] = point @ rot_matrix
+
         return points
-    
+
     def rotate_y(points, angle):
         theta = (angle/180.) * np.pi
-        rot_matrix = np.array([[np.cos(theta),0,np.sin(theta)],
-                                [0               ,1,               0], 
-                                [-np.sin(theta),0,np.cos(theta)]])
-        for i,point in enumerate(points):
-            points[i,:] = point @ rot_matrix
-        
+        rot_matrix = np.array([[np.cos(theta), 0, np.sin(theta)],
+                               [0, 1,               0],
+                               [-np.sin(theta), 0, np.cos(theta)]])
+        for i, point in enumerate(points):
+            points[i, :] = point @ rot_matrix
+
         return points
-    
+
     def rotate_z(points, angle):
         theta = (angle/180.) * np.pi
-        rot_matrix = np.array([[np.cos(theta),-np.sin(theta),0],
-                                [np.sin(theta),np.cos(theta),0], 
-                                [0               ,0               ,1]])
-        for i,point in enumerate(points):
-            points[i,:] = point @ rot_matrix
-        
+        rot_matrix = np.array([[np.cos(theta), -np.sin(theta), 0],
+                               [np.sin(theta), np.cos(theta), 0],
+                               [0, 0, 1]])
+        for i, point in enumerate(points):
+            points[i, :] = point @ rot_matrix
+
         return points
 
     landmarks = rotate_x(landmarks, -90)
@@ -78,30 +80,36 @@ def transform_landmarks(landmarks, armature, initial= True):
     landmarks = rotate_y(landmarks, 180)
 
     # SCALING
-    x_scale_armature = np.max(armature_points[:,0]) - np.min(armature_points[:,0])
-    y_scale_armature = np.max(armature_points[:,1]) - np.min(armature_points[:,1])
-    z_scale_armature = np.max(armature_points[:,2]) - np.min(armature_points[:,2]) + 0.013
+    x_scale_armature = np.max(
+        armature_points[:, 0]) - np.min(armature_points[:, 0])
+    y_scale_armature = np.max(
+        armature_points[:, 1]) - np.min(armature_points[:, 1])
+    z_scale_armature = np.max(
+        armature_points[:, 2]) - np.min(armature_points[:, 2]) + 0.013
 
-    x_scale_landmarks = np.max(landmarks[:,0]) - np.min(landmarks[:,0])
-    y_scale_landmarks = np.max(landmarks[:,1]) - np.min(landmarks[:,1])
-    z_scale_landmarks = np.max(landmarks[:,2]) - np.min(landmarks[:,2])
+    x_scale_landmarks = np.max(landmarks[:, 0]) - np.min(landmarks[:, 0])
+    y_scale_landmarks = np.max(landmarks[:, 1]) - np.min(landmarks[:, 1])
+    z_scale_landmarks = np.max(landmarks[:, 2]) - np.min(landmarks[:, 2])
 
-    landmarks[:,0] = (landmarks[:,0] * x_scale_armature) / x_scale_landmarks
-    landmarks[:,1] = (landmarks[:,1] * y_scale_armature) / y_scale_landmarks
-    landmarks[:,2] = (landmarks[:,2] * z_scale_armature) / z_scale_landmarks
+    landmarks[:, 0] = (landmarks[:, 0] * x_scale_armature) / x_scale_landmarks
+    landmarks[:, 1] = (landmarks[:, 1] * y_scale_armature) / y_scale_landmarks
+    landmarks[:, 2] = (landmarks[:, 2] * z_scale_armature) / z_scale_landmarks
 
     # SHIFTING
-    min_x_arm, min_y_arm, min_z_arm = np.min(armature_points[:,0]), np.min(armature_points[:,1]), np.min(armature_points[:,2])
-    min_x_lm, min_y_lm, min_z_lm = np.min(landmarks[:,0]), np.min(landmarks[:,1]), np.min(landmarks[:,2])
+    min_x_arm, min_y_arm, min_z_arm = np.min(armature_points[:, 0]), np.min(
+        armature_points[:, 1]), np.min(armature_points[:, 2])
+    min_x_lm, min_y_lm, min_z_lm = np.min(landmarks[:, 0]), np.min(
+        landmarks[:, 1]), np.min(landmarks[:, 2])
 
-    landmarks[:,0] += min_x_arm - min_x_lm
-    landmarks[:,1] += min_y_arm - min_y_lm
-    landmarks[:,2] += min_z_arm - min_z_lm + 0.013
+    landmarks[:, 0] += min_x_arm - min_x_lm
+    landmarks[:, 1] += min_y_arm - min_y_lm
+    landmarks[:, 2] += min_z_arm - min_z_lm + 0.013
 
     new_armature_points = []
     for point in results:
-        new_armature_points.append(get_cluster_facial_landmarks(landmarks[np.array([int(i) for i in point.keys()])], point.values()))
-    
+        new_armature_points.append(get_cluster_facial_landmarks(
+            landmarks[np.array([int(i) for i in point.keys()])], point.values()))
+
     modifiers = []
     with open(modifiers_path, 'r') as f:
         r = csv.reader(f, delimiter=',')
@@ -125,7 +133,7 @@ def transform_landmarks(landmarks, armature, initial= True):
 #         Config.armature_points = armature_points
 
 #         return landmarks
-    
+
 #     else:
 #         initial_landmarks = Config.initial_landmarks
 #         initial_landmarks = np.append(initial_landmarks, np.ones((initial_landmarks.shape[0], 1)), axis= 1)
@@ -139,43 +147,43 @@ def transform_landmarks(landmarks, armature, initial= True):
 
 #         Config.armature_points = new_armature_points[:, :3]
 #         Config.initial_landmarks = landmarks[:, :3]
-        
+
 #         return new_armature_points[:, :3]
 
 # def transform_landmarks2(landmarks, armature, initial = True):
 #         np = import_module('numpy')
 #         landmarks = np.array(landmarks)
 #         armature_points = np.array(armature)
-        
+
 #         #ROTATING
 #         # def rotate_x(points, angle):
 #         #     theta = (angle/180.) * np.pi
 #         #     rot_matrix = np.array([[1,               0,                 0],
-#         #                             [0,np.cos(theta), -np.sin(theta)], 
+#         #                             [0,np.cos(theta), -np.sin(theta)],
 #         #                             [0,np.sin(theta),  np.cos(theta)]])
 #         #     for i,point in enumerate(points):
 #         #         points[i,:] = point @ rot_matrix
-            
+
 #         #     return points
-        
+
 #         # def rotate_y(points, angle):
 #         #     theta = (angle/180.) * np.pi
 #         #     rot_matrix = np.array([[np.cos(theta),0,np.sin(theta)],
-#         #                             [0               ,1,               0], 
+#         #                             [0               ,1,               0],
 #         #                             [-np.sin(theta),0,np.cos(theta)]])
 #         #     for i,point in enumerate(points):
 #         #         points[i,:] = point @ rot_matrix
-            
+
 #         #     return points
-        
+
 #         # def rotate_z(points, angle):
 #         #     theta = (angle/180.) * np.pi
 #         #     rot_matrix = np.array([[np.cos(theta),-np.sin(theta),0],
-#         #                             [np.sin(theta),np.cos(theta),0], 
+#         #                             [np.sin(theta),np.cos(theta),0],
 #         #                             [0               ,0               ,1]])
 #         #     for i,point in enumerate(points):
 #         #         points[i,:] = point @ rot_matrix
-            
+
 #         #     return points
 
 #         # landmarks = rotate_x(landmarks, -90)
@@ -201,12 +209,12 @@ def transform_landmarks(landmarks, armature, initial= True):
 #         # landmarks[:,0] += min_x_arm - min_x_lm
 #         # landmarks[:,1] += min_y_arm - min_y_lm
 #         # landmarks[:,2] += min_z_arm - min_z_lm
-        
+
 #         if initial:
 #             W = (armature_points).dot(np.linalg.inv(landmarks.T.dot(landmarks)).dot(landmarks.T))
 #             landmarks = W@landmarks
 #             Config.initial_landmarks = landmarks
-        
+
 #         else:
 #             shift = landmarks - Config.initial_landmarks
 #             min_x_arm = np.min(armature_points[:,0]) + np.min(shift[:, 0])
@@ -220,8 +228,8 @@ def transform_landmarks(landmarks, armature, initial= True):
 #             landmarks[:,2] += min_z_arm - min_z_lm
 
 #         # SHIFTING
-        
-#         #     Config.transformation_matrix = W   
+
+#         #     Config.transformation_matrix = W
 #         #     Config.new_armature = armature_points
 
 #         # else:
@@ -236,7 +244,7 @@ def transform_landmarks(landmarks, armature, initial= True):
 #         #     print(armature_points[0])
 
 #         #     W = armature_points.dot(np.linalg.inv(landmarks.T.dot(landmarks)).dot(landmarks.T))
-#         #     Config.transformation_matrix = W        
+#         #     Config.transformation_matrix = W
 #         #     Config.new_armature = armature_points
 #         #     landmarks = W@landmarks
 
