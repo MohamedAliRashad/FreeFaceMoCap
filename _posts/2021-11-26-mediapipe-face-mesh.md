@@ -25,13 +25,13 @@ MediaPipe Face Mesh is a computer vision technology that enables us to estimate 
 
 MediaPipe Face Mesh consist of two neural network models. The first is Face detection model (BlazeFace) which computes the face location so we can crop the face, the second is 3D face landmark model which operate on the cropped image to estimate 3D face landmarks.
 
-For more details about MediaPipe Face Mesh checkout this post [MediaPipe Face Mesh]([https://google.github.io/mediapipe/solutions/face_mesh.html](https://google.github.io/mediapipe/solutions/face_mesh.html))
+For more details about MediaPipe Face Mesh checkout this post [MediaPipe Face Mesh](https://google.github.io/mediapipe/solutions/face_mesh.html)
 
 # How we used MediaPipe?
 
-We used MediaPipe Face Mesh model to extract 468 landmarks from the user’s face image (captured by the webcam) in real-time. Then the position of each point of the landmarks in 3D space is used to influence the movement of the Face [Armature]([https://docs.blender.org/manual/en/latest/animation/armatures/introduction.html](https://docs.blender.org/manual/en/latest/animation/armatures/introduction.html))
+We used MediaPipe Face Mesh model to extract 468 landmarks from the user’s face image (captured by the webcam) in real-time. Then the position of each point of the landmarks in 3D space is used to influence the movement of the Face [Armature](https://docs.blender.org/manual/en/latest/animation/armatures/introduction.html)
 
-More about the mapping is discussed in this post: [landmark mapping]([https://mohamedalirashad.github.io/FreeFaceMoCap/2021-12-26-landmarks-mapping/](https://mohamedalirashad.github.io/FreeFaceMoCap/2021-12-26-landmarks-mapping/))
+More about the mapping is discussed in this post: [landmark mapping](https://mohamedalirashad.github.io/FreeFaceMoCap/2021-12-26-landmarks-mapping/)
 
 # References
 
