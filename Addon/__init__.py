@@ -19,9 +19,9 @@ Created by Rashad and Emam
 # bundle exec jekyll serve --livereload
 
 bl_info = {
-    "name": "Free Face Motion Capture 2021.1.0",
-    "author": "Rashad and Emam",
-    "version": (2021, 1, 0),
+    "name": "Free Face Motion Capture v0.1.0",
+    "author": "Nice People",
+    "version": (0, 1, 0),
     "blender": (2, 80, 0),
     "location": "Animation",
     "description": "Free Face Tracking Module for facial motion capture in Blender.",
@@ -31,13 +31,14 @@ bl_info = {
     "tracker_url": "https://github.com/MohamedAliRashad/FreeFaceMoCap/issues",
 }
 
-from .installDependancies import DEPENDANCIES_CLASSES, append_to_sys
+from .installDependancies import DEPENDANCIES_CLASSES, append_to_sys, check_installed
 append_to_sys()
 
 import warnings
 warnings.filterwarnings("ignore")
 
 import sys
+from pathlib import Path
 
 import bpy
 
@@ -58,7 +59,7 @@ def _is_python_64bit():
 
 
 def _is_config_latest():
-    return Config.addon_version == '2021.1.0'
+    return Config.addon_version == '0.1.0'
 
 
 def _is_blender_too_old():
@@ -114,10 +115,21 @@ else:
     CLASSES_TO_REGISTER = PROPERTIES_CLASSES + PANELS_CLASSES + OPERATORS_CLASSES
 
     def register():
+        if sys.platform == 'win32':
+            requirements_path = Path(__file__).parent / "requirements-windows.txt"
+        elif sys.platform == 'linux':
+            requirements_path = Path(__file__).parent / "requirements-linux.txt"
+
         try:
-            import numpy
-            import cv2
-            import mediapipe
+            modules = None
+            with open(requirements_path, 'r') as f:
+                modules = f.read().split("\n")
+                if modules[-1].strip() == '':
+                    modules.pop(-1)
+            
+            for module in modules:
+                check_installed(module)
+
             Config.are_dependencies_installed = True
         except:
             Config.are_dependencies_installed = False

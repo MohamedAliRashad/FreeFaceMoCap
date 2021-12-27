@@ -44,7 +44,7 @@ class FFMOCAP_OT_capture_face(bpy.types.Operator):
             self.mp_face_mesh = self.mp.solutions.face_mesh
         if self._cap is None:
             self._cap = self.cv2.VideoCapture(
-                Config.available_cameras[self.src][1])
+                Config.available_cameras[self.src][0])
             self._cap.set(self.cv2.CAP_PROP_FRAME_WIDTH, self.width)
             self._cap.set(self.cv2.CAP_PROP_FRAME_HEIGHT, self.height)
             self._cap.set(self.cv2.CAP_PROP_BUFFERSIZE, 1)

@@ -9,7 +9,10 @@ import bpy
 from .config import Config
 from .Panels.common import Common
 
-requirements_path = Path(__file__).parent / "requirements.txt"
+if sys.platform == 'win32':
+    requirements_path = Path(__file__).parent / "requirements-windows.txt"
+elif sys.platform == 'linux':
+    requirements_path = Path(__file__).parent / "requirements-linux.txt"
 
 def import_module(module_name, global_name=None, reload=True):
     """
@@ -74,7 +77,8 @@ def append_to_sys(module_name= '', from_requirements= True):
         modules = None
         with open(requirements_path, 'r') as f:
             modules = f.read().split("\n")
-            modules.pop(-1)
+            if modules[-1].strip() == '':
+                modules.pop(-1)
         
         for module in modules:
             append_module_to_sys(module)
@@ -86,9 +90,8 @@ def check_installed(module):
         module = 'cv2'
     try:
         importlib.import_module(module)
-        return True
-    except ModuleNotFoundError:
-        return False
+    except:
+        raise ModuleNotFoundError('')
     
 
 class FFMOCAP_PT_warning_panel(Common, bpy.types.Panel):
@@ -148,11 +151,13 @@ class FFMOCAP_OT_install_dependencies(bpy.types.Operator):
         modules = None
         with open(requirements_path, 'r') as f:
             modules = f.read().split("\n")
-            modules.pop(-1)
+            if modules[-1].strip() == '':
+                modules.pop(-1)
 
         for module in modules:
-            ret = check_installed(module)
-            if not ret:
+            try:
+                check_installed(module)
+            except:
                 self.report({'ERROR'}, f'Can not install the module named {module}.')
                 return {'CANCELLED'}
 

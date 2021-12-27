@@ -1,25 +1,32 @@
 import importlib
+import sys
 from .config import Config
 
 def get_available_cams():
     if not Config.are_dependencies_installed:
         return []
-    v4l2ctl = importlib.import_module('v4l2ctl')
+    
     cameras = []
-    for i in range(10):
-        try:
-            name = str(v4l2ctl.v4l2device.V4l2Device(i).name)
-            src = str(v4l2ctl.v4l2device.V4l2Device(i).device)
-            camera = (name, src)
+    if sys.platform == 'win32':
+        pygrabber = importlib.import_module('pygrabber.dshow_graph')
+        graph = pygrabber.FilterGraph()
+        cameras = list(enumerate(graph.get_input_devices()))
+    elif sys.platform == 'linux':
+        v4l2ctl = importlib.import_module('v4l2ctl')
+        for i in range(10):
+            try:
+                name = str(v4l2ctl.v4l2device.V4l2Device(i).name)
+                src = str(v4l2ctl.v4l2device.V4l2Device(i).device)
+                camera = (src, name)
 
-            if len(cameras) > 0:
-                if name in list(map(lambda x: x[0], cameras)):
-                    continue
+                if len(cameras) > 0:
+                    if name in list(map(lambda x: x[0], cameras)):
+                        continue
+                
+                cameras.append(camera)
             
-            cameras.append(camera)
-        
-        except FileNotFoundError:
-            continue
+            except FileNotFoundError:
+                continue
 
     return cameras
 
