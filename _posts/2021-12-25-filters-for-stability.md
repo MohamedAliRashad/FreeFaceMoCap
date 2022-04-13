@@ -2,42 +2,62 @@
 layout: post
 title: OneEuro Filter
 subtitle: Always start simple
-cover-img: /assets/img/path.jpg
-thumbnail-img: /assets/img/mediapipe.png
-share-img: /assets/img/mediapipe.png
+cover-img: /assets/img/filter.png
+thumbnail-img: /assets/img/jitter.jpg
+share-img: /assets/img/jitter.jpg
 tags: [filters]
 ---
 
+> All stable processes we shall predict. All unstable processes we shall control
+>
+> -- <cite>John von Neumann</cite>
+
 ## Introduction
-In any industrial solution, **Stability** is the key for success and in our project we wanted to make the system as stable and robust as possible.
 
-We chose to start simple in this part with the one-euro filter to see if it will suffice or not
+In any industrial solution, **Stability** is one of the major keys for success. And we wanted our tool to be as stable and fast as possible.
 
-To achieve this we used a low-pass filter (one-euro) to
+Mediapipe as a tool for inferring facial keypoints is nice but it suffers from **jittering** (shakiness) and we wanted for content creators to not go through the headache of filtering the data themselves and do it for them.
+
+Fortunately, there is a lot of filters to fix this problem and one of its simplest approaches 
+
+One of these filters is the **one-euro filter** and it's one of the simplest approaches for such problem.
 
 ## How it works
 
+The 1€ Filter is a low pass filter for real-time noisy stream of frames. its an exponential smoothing function that uses the hyperparameter alpha to smooth the transition between frames and make it more stable.
+
+<center>
+<img src="https://latex.codecogs.com/svg.latex?%5CLARGE%20Y_i%20%3D%20%5Calpha%20X_i%20&plus;%20%281%20-%20%5Calpha%29X_%7Bi-1%7D">
+</center>
+
+**Note**: The equation starts from second frame (i > 2)
+
+The **smoothing factor** (alpha) is calculated using this simple equation, where *fc* is the cut off frequency of the filter
+
+<center>
+<img src="https://latex.codecogs.com/svg.latex?%5CLARGE%20%5Calpha%20%3D%20%5Cfrac%7B2%20%5Cpi%20f_c%7D%7B2%20%5Cpi%20f_c%20&plus;%201%7D 
+">
+</center>
+
 ## Coding Tutorial
 
-Here, we go through the code together for further understanding
-
 In the [oneEuroFilter.py](https://github.com/MohamedAliRashad/FreeFaceMoCap/blob/main/Addon/FaceMeshTracking/oneEuroFilter.py) file, we can find two functions and a class:
-1. 
+
+**First function** is for calculating the alpha (the `smoothing_factor`)
 ```python
 def smoothing_factor(t_e, cutoff):
     np = import_module('numpy')
     r = 2 * np.pi * cutoff * t_e
     return r / (r + 1)
 ```
-In the `smoothing_factor` function, we evaluate the 
 
-2. 
+**Second function** is for calculating the output of filter
 ```python
 def exponential_smoothing(a, x, x_prev):
     return a * x + (1 - a) * x_prev
 ```
 
-3. 
+**The 1€ Filter class** takes different hyper parameters  
 ```python
 class OneEuroFilter:
     def __init__(self, t0, x0, dx0=0.0, min_cutoff=0.00001, beta=20,
@@ -104,18 +124,12 @@ else:
 
 self.frame_num += 1
 ```
-we provide a frame counter represented in `self.frame_num` to keep track of time.
-
-Then an if-else statement is made to lead the code between the initial state where we initialize the `OneEuroFilter` and the actual running of the algorithm.
-
-After the transformation of points (done using the modifiers) we log the values of the three directions (x, y, z) into the filter for its processing to happen.
-
 
 ## Future works
-1. 
-2. 
+1. Try [Kalman filter](https://www.intechopen.com/chapters/63164) and its variants
+1. Try [Particle Filters](https://towardsdatascience.com/particle-filter-a-hero-in-the-world-of-non-linearity-and-non-gaussian-6d8947f4a3dc)
 
 ## References
 1. [Noise Filtering Using 1€ Filter](https://jaantollander.com/post/noise-filtering-using-one-euro-filter/)
 2. [1€ Filter: A Simple Speed-based Low-pass Filter for
-Noisy Input in Interactive Systems](https://dl.acm.org/doi/10.1145/2207676.2208639) - [Paper](https://hal.inria.fr/hal-00670496/document)
+Noisy Input in Interactive Systems](https://hal.inria.fr/hal-00670496/document)
