@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MediaPipe for Face Tracking
-subtitle: Start simple and small 
+subtitle: Start simple, Start small 
 cover-img: /assets/img/path.jpg
 thumbnail-img: /assets/img/mediapipe.png
 share-img: /assets/img/mediapipe.png
