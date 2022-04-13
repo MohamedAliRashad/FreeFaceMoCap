@@ -1,7 +1,7 @@
 ---
 layout: post
 title: OneEuro Filter
-subtitle: Always start simple
+subtitle: Wizards of Control
 cover-img: /assets/img/filter.png
 thumbnail-img: /assets/img/jitter.jpg
 share-img: /assets/img/jitter.jpg
