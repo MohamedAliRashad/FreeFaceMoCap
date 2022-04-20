@@ -19,9 +19,9 @@ Created by Rashad and Emam
 # bundle exec jekyll serve --livereload
 
 bl_info = {
-    "name": "Free Face Motion Capture v0.1.0",
+    "name": "Free Face Motion Capture v1.0.0",
     "author": "Nice People",
-    "version": (0, 1, 0),
+    "version": (1, 0, 0),
     "blender": (2, 80, 0),
     "location": "Animation",
     "description": "Free Face Tracking Module for facial motion capture in Blender.",
@@ -59,7 +59,7 @@ def _is_python_64bit():
 
 
 def _is_config_latest():
-    return Config.addon_version == '0.1.0'
+    return Config.addon_version == '1.0.0'
 
 
 def _is_blender_too_old():

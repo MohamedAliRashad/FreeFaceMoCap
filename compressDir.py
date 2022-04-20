@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 
 default_dir = Path(__file__).parent
-addon_output = default_dir / "FreeFaceMoCapV1.0"
+addon_output = default_dir / "FreeFaceMoCapV1.0.0"
 
 # Create the parser
 parser = argparse.ArgumentParser(description="Build the archive for FreeFaceMoCap Addon")

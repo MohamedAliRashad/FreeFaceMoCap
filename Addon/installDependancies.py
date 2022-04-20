@@ -8,6 +8,7 @@ import bpy
 
 from .config import Config
 from .Panels.common import Common
+from .utils import get_available_cams
 
 if sys.platform == 'win32':
     requirements_path = Path(__file__).parent / "requirements-windows.txt"
@@ -55,9 +56,9 @@ def install_pip():
 
 def install_dependancies(module_name = '', from_requirements = True):
     if from_requirements:
-        subprocess.call([sys.executable, "-m", "pip", "install", '-r', requirements_path])
+        subprocess.call([sys.executable, "-m", "pip", "install", '-r', requirements_path, "--no-cache-dir"])
     else:
-        subprocess.call([sys.executable, "-m", "pip", "install", module_name])
+        subprocess.call([sys.executable, "-m", "pip", "install", "--no-cache-dir", module_name])
 
 def append_to_sys(module_name= '', from_requirements= True):
     def append_module_to_sys(module):
@@ -161,6 +162,7 @@ class FFMOCAP_OT_install_dependencies(bpy.types.Operator):
                 self.report({'ERROR'}, f'Can not install the module named {module}.')
                 return {'CANCELLED'}
 
+        Config.available_cameras = get_available_cams()
         return {"FINISHED"}
 
 
