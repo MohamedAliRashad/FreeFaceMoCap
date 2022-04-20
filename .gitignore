@@ -136,3 +136,8 @@ Hewedy instructions.txt
 
 # Pyre type checker
 .pyre/
+
+*.csv
+*.rar
+*.png
+*.json
