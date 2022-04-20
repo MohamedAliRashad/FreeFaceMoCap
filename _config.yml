@@ -14,7 +14,7 @@ author: Nice People
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Releases: "releases"
+  # Releases: "releases"
   About Us: "aboutme"
   Resources:
     - MediaPipe Face Tracking: "https://google.github.io/mediapipe/solutions/face_mesh"
