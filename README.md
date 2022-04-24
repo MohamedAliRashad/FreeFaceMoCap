@@ -6,7 +6,7 @@ Face Motion Capture for hobbyists and makers (**Mediapipe** + **Blender**) 💝
 
 1. Download the latest release from [Here](https://github.com/MohamedAliRashad/FreeFaceMoCap/releases)
 
-2. Go to `Edit` -> `Preferences` and the choose `Add-ons` from the left bar
+2. Go to `Edit` -> `Preferences` and choose `Add-ons` from the left bar
 
 3. Click `Install` and pick the location of zip file downloaded in first step
 
