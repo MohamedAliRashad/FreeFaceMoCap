@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 
 default_dir = Path(__file__).parent
-addon_output = default_dir / "FreeFaceMoCapV1.0.0"
+addon_output = default_dir / "FreeFaceMoCapV1.0.2"
 
 # Create the parser
 parser = argparse.ArgumentParser(description="Build the archive for FreeFaceMoCap Addon")
@@ -20,4 +20,4 @@ if not args.path.is_dir():
 if not args.path.exists():
     raise ValueError("Path provided does not exist")
 
-shutil.make_archive(addon_output, 'zip', args.path)
+shutil.make_archive(addon_output, 'zip', args.path.parent, args.path.stem)
